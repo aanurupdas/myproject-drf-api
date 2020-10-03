@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser,)   
-from datetime import date,timedelta,datetime
+from datetime import timedelta
 
 class UserProfileManager(BaseUserManager):
     def create_user(self, email, contact, password=None):
@@ -83,4 +83,18 @@ class UserAddress(models.Model):
     pin_code = models.CharField(max_length=40)
 
     class Meta:
-        db_table = 'user_address'      
+        db_table = 'user_address'   
+
+class UserProject(models.Model):
+    user =  models.ForeignKey(UserProfile,related_name='project',on_delete=models.CASCADE)
+    project_name = models.CharField(max_length=40)
+    start_date = models.DateField()
+    duration = models.IntegerField()
+    end_date = models.DateField()
+
+    def save(self, *args, **kwargs):
+        self.end_date = self.start_date + timedelta(days=365*(self.duration))
+        super(UserProject, self).save(*args, **kwargs) 
+
+    class Meta:
+        db_table = 'project'

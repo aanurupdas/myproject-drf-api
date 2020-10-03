@@ -23,3 +23,4 @@ Features:-
   
 4.Partial update own details with Knox Token(PUT request) URL:http://127.0.0.1:8000/update/
 5.Logout user with Knox Token URL:http://127.0.0.1:8000/logout/ 
+6.Project API CRUD features..................retrieve and update using project id.

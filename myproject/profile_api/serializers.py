@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from profile_api.models import (UserProfile,UserProfileData,UserAddress,)
+from profile_api.models import (UserProfile,UserProfileData,UserAddress,UserProject)
 from django.contrib.auth import authenticate
 import django.contrib.auth.password_validation as validators
 from datetime import date,timedelta,datetime
@@ -77,4 +77,10 @@ class UserDetailUpdateSerializer(serializers.ModelSerializer):
         profile.address.pin_code =  address_data.get('pin_code',profile.address.pin_code)
         profile.address.save()
         return instance
+        
+class ProjectSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = UserProject
+        fields = ('id','project_name','start_date','duration','end_date',)
+        read_only_fields = ('end_date',)
